@@ -31,10 +31,10 @@ function Header() {
               <Link to="/products">Products</Link>
             </li>
             <li>
-              <Link to="/men">Men</Link>
+              <Link to="/products/men">Men</Link>
             </li>
             <li>
-              <Link to="/women">Women</Link>
+              <Link to="/products/women">Women</Link>
             </li>
             <li>
               <Link to="/about">About</Link>

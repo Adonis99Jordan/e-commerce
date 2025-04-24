@@ -108,8 +108,7 @@ export const allProducts = [
       isNew: false,
       discount: 20,
     },
-  ]
-  
-  // Featured products (subset of all products)
-  export const featuredProducts = allProducts.slice(0, 4)
+  ]  
+
+export const featuredProducts = allProducts.slice(0, 4) // Export a subset of allProducts
   
