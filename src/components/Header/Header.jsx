@@ -1,13 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { Search, User, ShoppingCart, Sun, Moon } from "lucide-react"
 import AuthModal from "../Auth/AuthModal"
 import "./Header.css"
+import { useTheme } from "../../context/ThemeContext"
+import { useRef } from "react"
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
+  const { theme, toggleTheme } = useTheme()
+  const navigate = useNavigate()
+  const searchRef = useRef()
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
@@ -15,6 +21,16 @@ function Header() {
 
   const handleAuthClick = () => {
     setIsAuthModalOpen(true)
+  }
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    const value = searchRef.current.value.trim()
+    if (value) {
+      navigate(`/products?search=${encodeURIComponent(value)}`)
+      searchRef.current.value = ""
+      setMenuOpen(false)
+    }
   }
 
   return (
@@ -50,8 +66,20 @@ function Header() {
           </nav>
 
           <div className="header-actions">
-            <button className="icon-btn">
-              <i className="icon-search">🔍</i>
+            <form className="search-form" onSubmit={handleSearch}>
+              <input
+                type="text"
+                ref={searchRef}
+                placeholder="Search category..."
+                className="search-input"
+                aria-label="Search"
+              />
+              <button className="icon-btn" type="submit">
+                <i className="icon-search">🔍</i>
+              </button>
+            </form>
+            <button className="icon-btn" onClick={toggleTheme} title="Toggle Night Mode">
+              {theme === "light" ? "🌙" : "☀️"}
             </button>
             <button className="icon-btn" onClick={handleAuthClick}>
               <i className="icon-user">👤</i>
@@ -64,9 +92,9 @@ function Header() {
         </div>
       </header>
 
-      <AuthModal 
-        isOpen={isAuthModalOpen} 
-        onClose={() => setIsAuthModalOpen(false)} 
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
       />
     </>
   )

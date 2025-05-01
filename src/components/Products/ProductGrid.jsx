@@ -3,13 +3,15 @@ import ProductCard from "./ProductCard"
 import { allProducts } from "../../data/products" // Correctly import as a named export
 import "./ProductGrid.css"
 
-function ProductGrid() {
+function ProductGrid({ products }) {
   const [filter, setFilter] = useState("all")
 
   const filteredProducts =
     filter === "all"
-      ? allProducts
-      : allProducts.filter((product) => product.category.toLowerCase() === filter)
+      ? products || allProducts
+      : (products || allProducts).filter(
+          (product) => product.category.toLowerCase() === filter
+        )
 
   return (
     <div className="product-grid-container">
